@@ -5,7 +5,7 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=3
+VERSION=4
 #
 #NOTES=First public release
 #
@@ -155,7 +155,7 @@ do
 								"Update")
 									echo "Updating..."
 									rm baku.sh
-									wget https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh baku.sh
+									wget https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh
 									chmod 777 baku.sh
 									chmod +x baku.sh
 									exit 1
