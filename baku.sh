@@ -5,7 +5,7 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=1
+VERSION=2
 #
 #
 #Ask the system if we are root user, since we avoid some access or permissions problems
@@ -20,7 +20,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 	clear
 	echo "We are root!"
-	echo "Running over $(uname -a)"
+	echo "Running over $(hostname)"
         read -p "Press any key to continue the script"
 fi
 #
