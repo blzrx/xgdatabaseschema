@@ -5,9 +5,9 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=1
+VERSION=2
 #
-#NOTES=First public release
+#NOTES=First public release, first patch
 #
 #Ask the system if we are root user, since we avoid some access or permissions problems
 #Actually im working to make this script root-less
