@@ -20,7 +20,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 	clear
 	echo "We are root!"
-        echo "########################"
+	echo "Running over $(uname -a)"
         read -p "Press any key to continue the script"
 fi
 #
@@ -31,7 +31,7 @@ fi
 #
 clear
 PS3='Choose an action: '
-options=("Decrypt" "Decompress" "Encrypt" "Compress" "Exit")
+options=("Decrypt" "Decompress" "Encrypt" "Compress" "Update" "Exit")
 select opt in "${options[@]}"
 do
 	case $opt in 
@@ -139,6 +139,38 @@ do
 				;;
 				esac
 			done
+			;;
+		"Update")
+			#Create latest version variable
+			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep VERSION | cut -d "=" -f 2)
+			echo "Checking updates over the Github Repo..."
+				if [ "$VERSION" -lt "$UPDATEABLE"  ]
+					then
+    						echo "There's a update!"
+							unset options i
+							select opt10 in "Update" "Do Nothing"; do
+							case $opt10 in
+								"Update")
+									echo "Updating..."
+									rm baku.sh
+									wget https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh baku.sh
+									chmod +x baku.sh
+									exit 1
+								;;
+								"Do Nothing")
+									echo "Didnt Any changes..."
+								;;
+								*)
+									echo "Invalid option!"
+								;;
+							esac
+			done
+						
+				else [ "$VERSION" -gt "$UPDATEABLE"  ]
+						echo "You are running the latest version of this script"
+				fi
+
+			break
 			;;
 		"Exit")
 			echo "GoodBye!"
