@@ -5,8 +5,9 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=1
+VERSION=2
 #
+#NOTES=First public release
 #
 #Ask the system if we are root user, since we avoid some access or permissions problems
 #Actually im working to make this script root-less
@@ -142,7 +143,7 @@ do
 			;;
 		"Update")
 			#Create latest version variable
-			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep VERSION= | cut -d "=" -f 2)
+			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep 'VERSION=[-0-9]' | cut -d "=" -f 2)
 			echo "Checking updates over the Github Repo..."
 				if [ "$VERSION" -lt "$UPDATEABLE"  ]
 					then
