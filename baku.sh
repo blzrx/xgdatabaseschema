@@ -20,7 +20,6 @@ if [ "$(id -u)" != "0" ]; then
 else
 	clear
 	echo "We are root!"
-	echo "Running over $(uname -a)"
         echo "########################"
         read -p "Press any key to continue the script"
 fi
