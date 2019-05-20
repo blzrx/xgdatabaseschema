@@ -5,7 +5,9 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=2
+VERSION=1
+#
+#NOTES
 #
 #
 #Ask the system if we are root user, since we avoid some access or permissions problems
@@ -20,7 +22,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 	clear
 	echo "We are root!"
-	echo "Running over $(hostname)"
+	echo "Running over $(uname -a)"
         read -p "Press any key to continue the script"
 fi
 #
@@ -142,13 +144,15 @@ do
 			;;
 		"Update")
 			#Create latest version variable
-			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep VERSION= | cut -d "=" -f 2)
+			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep -E 'VERSION=[0-9]' | cut -d "=" -f 2)
 			echo "Checking updates over the Github Repo..."
-				if [ "$VERSION" -lt "$UPDATEABLE"  ]
+				if [ "$VERSION" -lt "$UPDATEABLE" ]
 					then
     						echo "There's a update!"
-							unset options i
-							select opt10 in "Update" "Do Nothing"; do
+							unset options2 i
+							options2=("Update" "Do Nothing")
+							select opt10 in "${options2[@]}"
+							do
 							case $opt10 in
 								"Update")
 									echo "Updating..."
@@ -159,17 +163,16 @@ do
 								;;
 								"Do Nothing")
 									echo "Didnt Any changes..."
+									exit 1
 								;;
 								*)
 									echo "Invalid option!"
 								;;
 							esac
-			done
-						
-				else [ "$VERSION" -gt "$UPDATEABLE"  ]
+						done
+				else [ "$VERSION" -gt "$UPDATEABLE" ]
 						echo "You are running the latest version of this script"
 				fi
-
 			break
 			;;
 		"Exit")
