@@ -65,12 +65,81 @@ do
 			;;
 		"Decompress")
 			echo "Decompress has been selected"
-			;;
-		"Encrypt")
-			echo "Encrypt has been selected"
+			dir2=$(pwd)
+			unset options i
+			while IFS= read -r -d $'\0' f; do
+				options[i++]="$f"
+				done < <(find $dir2/ -maxdepth 1 -type f -name "*.*" -print0 )
+			select opt3 in "${options[@]}" "Quit"; do
+				case $opt3 in
+				*.*)
+					echo "File $opt3 Selected from list"
+					echo "Decompressing..."
+					tar -xvzf $opt3
+					exit 1
+				;;
+				"Quit")
+					echo "Exiting..."
+					exit 1
+				;;
+				*)
+					echo "Invalid option!"
+				;;
+				esac
+			done
 			;;
 		"Compress")
 			echo "Compress has been selected"
+			echo "Please select the root conf folder, otherwise this will not work as expected"
+			dir3=$(pwd)
+			unset options i
+			while IFS= read -r -d $'\0' f; do
+				options[i++]="$f"
+				done < <( find $pwd -maxdepth 1 -type d -name "conf" -print0  )
+			select opt4 in "${options[@]}" "Quit"; do
+				case $opt4 in
+				*.*)
+					echo "Folder $opt4 Selected from list"
+					echo "Decompressing..."
+					tar -zcvf encrypted.tgz $opt4
+					exit 1
+				;;
+				"Quit")
+					echo "Exiting..."
+					exit 1
+				;;
+				*)
+					echo "Invalid option!"
+				;;
+				esac
+			done
+			;;
+		"Encrypt")
+			echo "Encrypt has been selected"
+			echo "Select a valid .tgz file to encrypt from the following list: "
+			dir4=$(pwd)
+			unset options i
+			while IFS= read -r -d $'\0' f; do
+				options[i++]="$f"
+				done < <(find $dir4/ -maxdepth 1 -type f -name "*.tgz" -print0 )
+			select opt5 in "${options[@]}" "Quit"; do
+				case $opt5 in
+				*.tgz)
+					echo "File $opt5 Selected from list"
+					echo "Encrypting..."
+					echo "You will be prompted for a password!"					
+					openssl enc -aes-256-cbc -md md5 -in $opt5 -out backup.conf
+					exit 1
+				;;
+				"Quit")
+					echo "Exiting..."
+					exit 1
+				;;
+				*)
+					echo "Invalid option!"
+				;;
+				esac
+			done
 			;;
 		"Exit")
 			echo "GoodBye!"
