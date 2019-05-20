@@ -142,7 +142,7 @@ do
 			;;
 		"Update")
 			#Create latest version variable
-			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep VERSION | cut -d "=" -f 2)
+			UPDATEABLE=$(curl --silent https://raw.githubusercontent.com/blzrx/xgdatabaseschema/master/baku.sh | grep VERSION= | cut -d "=" -f 2)
 			echo "Checking updates over the Github Repo..."
 				if [ "$VERSION" -lt "$UPDATEABLE"  ]
 					then
