@@ -5,7 +5,7 @@
 #this is used to work with xg firewall backups, over the 17.5 version
 #
 #
-VERSION=4
+VERSION=1
 #
 #NOTES=First public release
 #
@@ -69,7 +69,7 @@ do
 			unset options i
 			while IFS= read -r -d $'\0' f; do
 				options[i++]="$f"
-				done < <(find $dir2/ -maxdepth 1 -type f -name "*.tgz" -print0 )
+				done < <(find $dir2 -maxdepth 1 -type f -name "*.tgz" -print0 )
 			select opt3 in "${options[@]}" "Quit"; do
 				case $opt3 in
 				*.tgz)
@@ -102,7 +102,7 @@ do
 				*.*)
 					echo "Folder $opt4 Selected from list"
 					echo "Decompressing..."
-					tar -zcvf encrypted.tgz $opt4
+					tar -zcvf EncryptMe.tgz $opt4
 					exit 1
 				;;
 				"Quit")
