@@ -1,19 +1,29 @@
 #!/bin/bash
 #
-#Script by blzr
+#Script by blzr, 2019
 #
-#this is used to work with xg firewall backups, over the 17.5 version
+#This is used to work with xg firewall backups, over the 17.5 version
+#Mainly designed to avoid problems while working with raw backups
 #
 #
+#Version variable is used to update the script over the internet
+#it compares against a script mantained over github, doing a grep over this varibale
+#compares the local vs the web version, if the last is greater, a update is triggered
+#
+#You can safely set this variable to 1 if you want to force a update or 100 if you want to never update
 VERSION=2
 #
-#NOTES=First public release, first patch
+#NOTES=
+#V1 First public release, first patch
+#V2 Fixes variables passing over the whole script
+#V3 Fixes typo errors over the script
 #
+#######################################################################################
 #Ask the system if we are root user, since we avoid some access or permissions problems
 #Actually im working to make this script root-less
-#
+#######################################################################################
 #pre-execution verification
-#
+#######################################################################################
 if [ "$(id -u)" != "0" ]; then
 	echo "This script must be run as root!"
 	echo "GoodBye ):"
@@ -24,11 +34,17 @@ else
 	echo "Running over $(hostname)"
         read -p "Press any key to continue the script"
 fi
-#
+#######################################################################################
 #
 #True script starts here!
 #
 #
+#######################################################################################
+#Menu initialization, we present the whole options to the user under a do and select loop
+#then every option has his own submenu, making the whole process a little more interactive
+#for the user, every break statement is used to stop the loop
+#
+#this could be upgraded to a C version of the same script, this is WIP.
 #
 clear
 PS3='Choose an action: '
@@ -168,11 +184,9 @@ do
 								;;
 							esac
 			done
-						
-				else [ "$VERSION" -gt "$UPDATEABLE"  ]
+					else [ "$VERSION" -gt "$UPDATEABLE"  ]
 						echo "You are running the latest version of this script"
 				fi
-
 			break
 			;;
 		"Exit")
