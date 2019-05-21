@@ -117,7 +117,7 @@ do
 				case $opt4 in
 				*.*)
 					echo "Folder $opt4 Selected from list"
-					echo "Decompressing..."
+					echo "Compressing..."
 					tar -zcvf EncryptMe.tgz $opt4
 					exit 1
 				;;
